@@ -67,7 +67,7 @@ class _Main {
 		for (var y = 0; y < h; ++y) for (var x = 0; x < w; ++x) {
 			var bi = (y * w + x) * 4; // base index
 
-			if (px[bi+3] != 0) continue;
+			if (px[bi+3] != 0) continue; // skip if alpha is not 0
 
 			var r = 0, g = 0, b = 0, a = 0;
 
@@ -76,9 +76,10 @@ class _Main {
 				var sy = y + dy; // sample y
 				if (sy < 0 || sy >= h) continue;
 				for (var dx = -1; dx <= 1; ++dx) {
+					if (dx == 0 && dy == 0) continue; // cancel center
+
 					var sx = x + dx; // sample x
 					if (sx < 0 || sx >= w) continue;
-					if (sx == 0 && sy == 0) continue;
 
 					var sbi = (sy * w + sx) * 4; // sample base index
 
@@ -90,7 +91,7 @@ class _Main {
 				}
 			}
 
-			if (a == 0) continue;
+			if (a == 0) continue; // no opaque pixel around here
 
 			px[bi] = r / a;
 			px[bi+1] = g / a;

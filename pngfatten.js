@@ -223,11 +223,11 @@ _Main.fatten$LUint8ClampedArray$II = function (px, w, h) {
 					continue;
 				}
 				for (dx = -1; dx <= 1; ++ dx) {
-					sx = x + dx;
-					if (sx < 0 || sx >= w) {
+					if (dx === 0 && dy === 0) {
 						continue;
 					}
-					if (sx === 0 && sy === 0) {
+					sx = x + dx;
+					if (sx < 0 || sx >= w) {
 						continue;
 					}
 					sbi = (sy * w + sx) * 4;
