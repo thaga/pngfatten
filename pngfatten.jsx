@@ -69,7 +69,7 @@ class _Main {
 
 			if (px[bi+3] != 0) continue; // skip if alpha is not 0
 
-			var r = 0, g = 0, b = 0, a = 0;
+			var sumR = 0, sumG = 0, sumB = 0, sumA = 0;
 
 			// sampling loop
 			for (var dy = -1; dy <= 1; ++dy) {
@@ -83,19 +83,19 @@ class _Main {
 
 					var sbi = (sy * w + sx) * 4; // sample base index
 
-					var sa = px2[sbi + 3]; // sampled alpha
-					r += px2[sbi] * sa;   // alpha weighted color
-					g += px2[sbi+1] * sa; // alpha weighted color
-					b += px2[sbi+2] * sa; // alpha weighted color
-					a += sa;
+					var a = px2[sbi + 3]; // sampled alpha
+					sumR += px2[sbi] * a;   // alpha weighted color R
+					sumG += px2[sbi+1] * a; // alpha weighted color G
+					sumB += px2[sbi+2] * a; // alpha weighted color B
+					sumA += a;
 				}
 			}
 
-			if (a == 0) continue; // no opaque pixel around here
+			if (sumA == 0) continue; // no opaque pixel around here
 
-			px[bi] = r / a;
-			px[bi+1] = g / a;
-			px[bi+2] = b / a;
+			px[bi  ] = sumR / sumA;
+			px[bi+1] = sumG / sumA;
+			px[bi+2] = sumB / sumA;
 		}
 	}
 }
